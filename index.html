@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Home Buttons</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <script module>
+        import(
+            // In development we import locally.
+            window.location.hostname === "127.0.0.1"
+                ? "/esp-web-tools/dist/web/install-button.js"
+                : "/HomeButtonsFlasher/esp-web-tools/dist/web/install-button.js"
+        );
+    </script>
+    <script defer>
+        function updateManifest() {
+            // Get the selected values from the dropdowns
+            const deviceType = document.getElementById('device-type').value;
+            const firmwareVersion = document.getElementById('firmware-version').value;
+            const imageType = document.getElementById('image-type').value;
+
+            // Construct the manifest URL based on the selected values
+            const manifestURL = `manifest/${firmwareVersion}_${deviceType}_${imageType}.json`;
+
+            // Set the manifest attribute of the esp-web-install-button
+            document.getElementById('install-button').setAttribute('manifest', manifestURL);
+
+            // Set the value of the text field to the current manifest URL for debugging
+            // document.getElementById('manifest-url').value = manifestURL;
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Attach the updateManifest function to the change events of the dropdowns
+            document.getElementById('device-type').addEventListener('change', updateManifest);
+            document.getElementById('firmware-version').addEventListener('change', updateManifest);
+            document.getElementById('image-type').addEventListener('change', updateManifest);
+
+            // Call the updateManifest function once when the page loads
+            updateManifest();
+        });
+    </script>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+        }
+
+        .content {
+            width: 400px;
+            text-align: left;
+        }
+
+        h1 {
+            color: #212121;
+        }
+
+        p,
+        li {
+            /* margin-bottom: 20px; */
+            margin-top: 10px;
+            color: #424242;
+        }
+
+        .dropdowns {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+
+        .centered {
+            display: flex;
+            justify-content: center;
+        }
+
+        select {
+            padding: 10px;
+            border: none;
+            background-color: #ffffff;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.24);
+            font-size: 1rem;
+            color: #424242;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #00BDD6;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        button:hover {
+            background-color: #0094A8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="centered">
+            <img src="home_buttons_logo.svg" alt="Home Buttons Logo" width="50px" height="50px">
+        </div>
+        <div class="centered">
+            <h1>Home Buttons Flasher</h1>
+        </div>
+        <hr />
+        <ol>
+            <li>Connect your device
+                <ol>
+                    <li><b>Home Buttons</b> - USB-C cable</li>
+                    <li><b>Home Buttons Mini</b> - USB to Serial adapter</li>
+                </ol>
+            </li>
+            <li>Select device type</li>
+            <li>Select new firmware version</li>
+            <li>Select image type
+                <ol>
+                    <li><b>Update</b> - Regular update</li>
+                    <li><b>Full Image</b> - Flash entire memory. Erases all user data.</li>
+                </ol>
+            </li>
+            <li>Put device into <b>programming mode:</b><br />
+                Press and hold BOOT button, then press RST button.
+                BOOT LED will light up. Release both buttons </li>
+            <li>Click CONNECT</li>
+            <li>Select your device from the list of available ports</li>
+            <li>Click INSTALL and skip the Erase device prompt. Confirm installation once again.</li>
+            <li>Wait until installation is complete, then reset the device with the RST button.</li>
+            <li>Done!</li>
+        </ol>
+        <br />
+        <hr />
+        <br />
+
+        <div class="dropdowns">
+            <select id="device-type">
+                <option value="original">Home Buttons</option>
+                <option value="mini">Home Buttons Mini</option>
+            </select>
+
+            <select id="firmware-version">
+                <option value="v2.4.0">v2.4.0</option>
+            </select>
+
+            <select id="image-type">
+                <option value="update">Update</option>
+                <option value="full_image">Full Image</option>
+            </select>
+
+        </div>
+        <!-- <div class="centered">
+            <input type="text" id="manifest-url" readonly style="width:100%; margin-top:20px;" />
+        </div> -->
+        <br />
+        <div class="centered">
+            <esp-web-install-button id="install-button" manifest="">
+                <button slot="activate">CONNECT</button>
+                <span slot="unsupported">Browser not supported!</span>
+                <span slot="not-allowed">HTTP not allowed!</span>
+            </esp-web-install-button>
+        </div>
+        <div style='text-align:right;font-size:11px;'>
+            <br />
+            <hr />
+            <a href="https://esphome.github.io/esp-web-tools/" target='_blank' style='color:#aaa;'>Powered by ESP Web
+                Tools</a>
+        </div>
+    </div>
+</body>
+
+</html>
