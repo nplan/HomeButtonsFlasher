@@ -1,0 +1,16 @@
+{
+    "name": "v2.5.1 mini full image",
+    "version": "2.5.1",
+    "new_install_skip_erase": true,
+    "builds": [
+        {
+            "chipFamily": "ESP32-S2",
+            "parts": [
+                {
+                    "path": "/HomeButtonsFlasher/firmware/fw_v2.5.1_mini_full_image.bin",
+                    "offset": 0
+                }
+            ]
+        }
+    ]
+}
