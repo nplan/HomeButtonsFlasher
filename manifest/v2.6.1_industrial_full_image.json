@@ -1,0 +1,16 @@
+{
+    "name": "v2.6.1 industrial full image",
+    "version": "2.6.1",
+    "new_install_skip_erase": true,
+    "builds": [
+        {
+            "chipFamily": "ESP32-S2",
+            "parts": [
+                {
+                    "path": "/HomeButtonsFlasher/firmware/fw_v2.6.1_industrial_full_image.bin",
+                    "offset": 0
+                }
+            ]
+        }
+    ]
+}
